@@ -1,0 +1,38 @@
+ALGORITHM translate_date
+VAR
+    nb, day, month, year : INTEGER;
+    mon : STRING;
+BEGIN
+    Write("Give the number");
+    Read(nb);
+    day   := nb % 1000000;
+    month := nb % 10000;
+    year  := nb % 100;
+    IF ( month > 12 or day > 31) THEN
+        Write("Wrong date, verify the given number.");
+    ELSEIF (month = 2 AND (year % 4 = 0) AND day > 29) THEN
+        Write("day is not corresponding with the month.");
+    ELSEIF (month = 2 AND (year % 4 <> 0) AND day > 28) THEN
+        Write("day is not corresponding with the month.");
+    ELSEIF((month = 4 OR month = 6 OR month = 9 OR month = 11) and day > 30) THEN
+        Write("day is not corresponding with the month.");
+    ELSE
+        SWITCH (month) DO
+            case 1  : mon := "January"; BREAK;
+            case 2  : mon := "February"; BREAK;
+            case 3  : mon := "March"; BREAK;
+            case 4  : mon := "April"; BREAK;
+            case 5  : mon := "May"; BREAK;
+            case 6  : mon := "June"; BREAK;
+            case 7  : mon := "July"; BREAK;
+            case 8  : mon := "August"; BREAK;
+            case 9  : mon := "September"; BREAK;
+            case 10 : mon := "October"; BREAK;
+            case 11 : mon := "November"; BREAK;
+            case 12 : mon := "December";
+        END_SWITCH
+        Write("Day : ",day);
+        Write("Month : ", mon);
+        Write("Year : ", year+2000);
+    END_IF
+END

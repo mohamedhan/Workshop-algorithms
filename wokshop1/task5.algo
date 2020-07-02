@@ -1,0 +1,27 @@
+ALGORITHM valid_arithmetic
+VAR
+    wrong : BOOLEAN := FALSE;
+    nb_par : INTEGER := 0;
+BEGIN
+    WHILE (c <> '#') DO
+        Read(c);
+        IF ((NOT isDigit(c)) OR (c<>'+' AND c<>'-' AND c<>'*' AND c<>'/') THEN
+            wrong := TRUE;
+        END_IF
+
+        IF (c='(') THEN
+            nb_par := nb_par +1;
+        END_IF
+
+        IF (c=')') THEN
+            nb_par := nb_par -1;
+        END_IF
+        
+    END_WHILE
+
+    IF (wrong = FALSE AND nb_par = 0) THEN
+        Write("This is a valid arithmetic expression.");
+    ELSE
+        Write("This is  not a valid arithmetic expression.");
+    END_IF
+END
