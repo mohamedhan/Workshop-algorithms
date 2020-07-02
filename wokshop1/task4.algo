@@ -1,0 +1,54 @@
+ALGORITHM Automate
+VAR
+    state : INTEGER := 0;
+    c : CHAR;
+    p_ent,p_dec : INTEGER;
+BEGIN
+    WHILE (state<>4 and state<>5) DO
+        Write('enter the character ')
+        Read(c)
+        SWITCH (state) DO
+            case 0 : IF (isDigit(c)) THEN
+                state:=1;
+                p_ent:=toInteger(c);
+            ELSE_IF (c=" ") THEN
+                state:=0
+            ELSE
+                state:=5
+            END_IF
+            case 1 : IF (isDigit(c)) THEN
+                state:=1;
+                p_ent:=p_ent*10+toInteger(c)
+            ELSE_IF (c=".") THEN
+                state:=2
+             ELSE_IF (c="#") THEN
+                state:=4
+            ELSE
+                state:=5
+            END_IF
+            case 2 : IF (isDigit(c)) THEN
+                state:=3
+                p_dec:=toInteger(c)
+            ELSE
+                state:=5
+            END_IF
+            case 3 : IF (isDigit(c)) THEN
+                state:=3;
+                p_dec:=p_dec*10+toInteger(c)
+            ELSE_IF (c="#") THEN
+                state:=4
+            ELSE
+                state:=5
+            END_IF
+        END_SWITCH
+    END_WHILE
+    IF (state=4) THEN
+        write("valid expression ")
+        write(p_ent);
+        write(p_dec)
+    ELSE
+        write(" non valid expression ")
+    END_IF
+
+
+END

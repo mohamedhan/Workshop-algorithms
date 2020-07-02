@@ -1,0 +1,13 @@
+ALGORITHM Permutation
+VAR
+    x,y,z,aux : INTEGER;
+BEGIN
+    Write('entrer x')
+    Read(x)
+
+    aux:=x;
+    x:=y;
+    y:=z;
+    z:=aux    
+
+END

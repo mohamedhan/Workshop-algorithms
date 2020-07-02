@@ -1,0 +1,198 @@
+ALGORITHM algorithm_name
+VAR 
+    //1array
+    tab : ARRAY_OF INTEGER[5];
+    pos,elt : INTEGER;
+    //2matrix
+    a : ARRAY_OF INTEGER[M][N];
+    b : ARRAY_OF INTEGER[M][O];
+    c : ARRAY_OF INTEGER[M][O];
+    //3string
+            //1
+            str: STRING[]:= "   GOMYCODE"
+            //2
+            str1,str2:String[50];
+    //4Struct
+        Person :	STRUCT
+                            cin : INTEGER;
+                            name : STRING;
+                            age: INTEGER;
+                        END_STRUCT
+        tab : ARRAY_OF Person[10];  
+
+     //5Stack
+     state_stack : CHAR; 
+    c : CHAR := ' ';
+    stk : STACK;
+    wrong : BOOLEAN := FALSE;
+
+    // 6 hash table
+    htab:HASH_TABLE<INTEGER,STRING>
+
+    // 7 linked list
+    List :	STRUCT
+                        data : INTEGER; //any data structure
+                        next : ^List; //^  pointer
+                    END_STRUCT
+
+    first: ^List :=NULL //pointer
+    p: ^List :=NULL //pointer
+    c:CHAR;
+    i:INTEGER:=0;                
+
+BEGIN
+ //1111: ARRAY   
+ //
+    FOR i FROM 0 TO tab.length-1   DO
+        read(tab[i])
+    END_FOR
+
+    //insert element (pos of the element elt and value of the element)
+      j := tab.length-1;
+    WHILE (j >= pos) DO
+        tab[j+1] := tab[j]; // translation from left to right
+        j := j-1; // update index
+    END_WHILE
+
+    tab[pos] := elt;
+  // 111111
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+  //2222:Matrix
+  //
+    FOR i FROM 0 TO M-1   DO
+        FOR j FROM 0 TO N-1   DO
+            read(tab[i][j])
+        END_FOR
+    END_FOR
+
+    FOR i FROM 0 TO M-1  DO
+        FOR j FROM 0 TO O-1  DO
+            FOR k FROM 0 TO N-1  DO
+                c[i][j]:=c[i][j]+a[i][k]*b[k][j]
+            END_FOR
+        END_FOR
+    END_FOR
+
+
+  //222  
+/////////////////////////////////////////////////////////////////////////////////////////
+
+  //33333:String 
+  
+
+    //compare two strings
+
+    IF (str1.length<>str2.length) THEN
+        write("the strings are not equal")
+    ELSE
+        str1:=toUpperCase(str1)
+        str2:=toUpperCase(str2)
+
+        FOR i FROM 0 TO str1.length-1   DO
+            IF (str1[i]<>str2[i]) THEN
+                BREAK;
+            END_IF
+        END_FOR
+        IF (i=str1.length-1) THEN
+            write("the strings are  equal")
+        ELSE
+            write("the strings are not equal")
+        END_IF
+    END_IF
+
+  //3333
+/////////////////////////////////////////////////////////////////////////////////////////
+
+  //4444:Struct
+    // FOR i FROM 0 TO tab.length-1 STEP step  DO
+    //     read(tab[i].cin,tab[i].name,tab[i].age)
+    // END_FOR
+    
+    FOR i FROM 0 TO tab.length-1   DO
+        IF (tab[i].cin=2) THEN
+            namePerson:=tab[i].name
+        END_IF
+    END_FOR
+  //444
+/////////////////////////////////////////////////////////////////////////////////////////
+  //5555: push/pop/peek/isEmpty
+  // [ab[dfv(bd{bbfr   })]]
+    WHILE (c <> '#' AND NOT wrong) DO
+        Read(c);
+        SWITCH (c) DO
+            case '[': 
+            case '{': 
+            case '(': stk.push(c);
+                            state_stack := stk.peek(); // peek do not affect the stack.
+                            Write(state_stack);
+                            BREAK;
+            case ']': IF (stp.peek()='[') THEN
+                                state_stack := stk.pop(); // peek do not affect the stack.
+                                Write(state_stack);
+                            ELSE
+                                wrong := TRUE;
+                            END_IF  
+                            BREAK;
+            case ')': IF (stp.peek()='(') THEN
+                                state_stack := stk.pop(); // peek do not affect the stack.
+                                Write(state_stack);
+                            ELSE
+                                wrong := TRUE;    
+                            END_IF  
+                            BREAK;
+            case '}': IF (stp.peek()='{') THEN
+                                state_stack := stk.pop(); // peek do not affect the stack.
+                                Write(state_stack);
+                            ELSE
+                                wrong := TRUE;
+                            END_IF  
+                            BREAK;
+                            
+        END_SWITCH
+
+        
+    END_WHILE
+
+    IF (stk.isEmpty() AND NOT wrong) THEN
+        Write("Empty stack, so brackets match.");
+    ELSE
+        Write("Stack not empty, so brackets don’t match.");
+    END_IF
+  //5555
+///////////////////////////////////////////////////////////////////////////////////////////
+
+//6666:hash table insert/get/lookup/delete
+    htab.insert(0,"zero")
+    htab.insert(1,"one");
+    htab.insert(2,"two");
+    htab.insert(3,"three");
+
+    htab.lookup(0); // TRUE
+    htab.lookup(5); // FALSE
+
+    htab.get(0); // "zero"
+
+    htab.delete(0);
+
+
+//6666
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+//7777:LInked List create/free
+
+    WHILE (i<3) DO
+        read(c)
+        // allocate memory and create a node 
+        p:=create(List)
+        // insert data in the node       
+        p^.data:=c;
+       // link first to p inserting in the head of the list
+       p^.next:=first //null
+       first:=p
+
+    END_WHILE
+//7777
+
+END
