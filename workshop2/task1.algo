@@ -1,0 +1,50 @@
+ALGORITHM intervals_overlap
+VAR
+    intrs : ARRAY_OF type[20][2]; // each line of the matrix is an interval
+    lastTime, i, N : INTEGER;
+    count : ARRAY_OF INTEGER[100];
+    sum : INTEGER := value;
+    isIntersect : BOOLEAN := FALSE;
+BEGIN
+    // we readed N intervals 
+
+    //Find the max end time among all the intervals. Call it lastTime.
+    lastTime := -1;
+    FOR i FROM 0 TO N-1 DO
+        IF (lastTime < intrs[i][1]) THEN   // intrs[i][1] means end of interval
+            lastTime :=  intrs[i][1];
+        END_IF
+    END_FOR
+
+    //Forst the count[] size to be lastTime+1
+    count.length := lastTime +1;
+
+    FOR i FROM 0 TO N-1 DO
+        count[intrs[i][0]] := count[intrs[i][0]] + 1;  // intrs[i][0] start interval
+        count[intrs[i][1]] := count[intrs[i][1]] - 1; 
+    END_FOR
+
+
+
+    /* Once the count[] array is filled, iterate through the count array and 
+    keep adding array values. If any time sum is greater than 1 means there is overlapping 
+    (Notice: If intervals are not overlapping then +1 for start of interval 
+    and -1 for end of the interval so sum becomes 0 if sum is greater than 1 
+    means another interval started before existing interval ends.) */
+
+    FOR i FROM 0 TO count.length -1 DO
+        sum := sum + count[i];
+        IF (sum > 1) THEN
+            isIntersect := TRUE;
+            BREAK;
+        END_IF
+    END_FOR
+
+    IF (isIntersect) THEN
+        Write("Intervals are overlapping");
+    ELSE
+        Write("No intervals overlap");
+    END_IF
+
+
+END

@@ -1,0 +1,78 @@
+/*
+Approach: 
+
+Check if the string has at least K unique characters if no then prints 
+the error message and stop.
+Let’s say we take substring between indexes curr_start and curr_end, 
+both points to index 0 at the beginning.
+Keep adding one character at a time to the substring by moving curr_end
+pointer to the right and make sure that condition of substring has at 
+most K unique characters , is valid by adding the new character and if 
+any point the condition is not valid then start moving curr_start pointer 
+to the right till condition is valid again.
+At each step, keep track of the length of a maximum substring by doing curr_end-curr_start.  
+To check whether substring has only K unique characters, maintain an array of size 26 
+( 26 alphabets) and the array is filled with the count of characters in the string to 
+the respective index. 0th index for ‘a’ and 25th index for z.
+See the example below for more understanding.
+*/
+
+ALGORITHM K_unique_characters
+VAR
+    str : STRING[50];
+    k, i, j, count : INTEGER;
+    diff : BOOLEAN;
+    max_start, max_length, curr_start, curr_end : INTEGER := 0;
+    alpha_count : HASH_TABLE<CHAR,INTEGER>;
+    
+BEGIN
+    Read(str);
+    Read(k);
+    count :=0;
+    FOR i FROM 0 TO str.length-1 DO
+        diff := TRUE;
+        FOR j FROM i+1 TO str.length-1 DO
+            IF (str[i] = str[j]) THEN
+                diff := FALSE;
+                BREAK;
+            END_IF
+        END_FOR
+        IF (diff) THEN
+            count := count +1;
+        END_IF
+    END_FOR
+
+    IF (count < k) THEN
+        Write("Not enough unique character is present in the input string");
+    ELSE
+
+    FOR i FROM 0 TO str.length-1  DO
+        IF (alpha_count.lookup(str[i]) = TRUE) THEN
+            count := alpha_count.get(str[i]);
+            alpha_count.insert(str[i],count+1);
+        ELSE
+            alpha_count.insert(str[i],1);
+        END_IF
+        curr_end := curr_end +1;
+        //check if new char is added or unique chars count is at most k 
+        //in the window
+        WHILE (alpha_count.getKeys().length > k) DO
+            count := alpha_count.get(str[curr_start]);
+            alpha_count.insert(str[curr_start],count-1);
+            curr_start := curr_start +1;
+        END_WHILE
+
+        //check if max_length needs to be updated
+        IF (curr_end - curr_start > max_length) THEN
+            max_start := curr_start ;
+            max_length := curr_end - curr_start ;
+        END_IF
+        
+    END_FOR
+    Write("Longest substring most unique characters is : ")
+    FOR i FROM max_start TO max_start+max_length-1 DO
+        Write(str[i]);
+    END_FOR
+    END_IF
+
+END

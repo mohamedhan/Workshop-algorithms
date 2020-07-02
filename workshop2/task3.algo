@@ -1,0 +1,22 @@
+// Use 2 loops. For each element in the array, find the sum 
+// with every other element and keep track of the minimum sum found.
+ALGORITHM near_to_zero
+VAR
+    i,j,sum : INTEGER;
+    arr : ARRAY_OF INTEGER[50];
+    min_sum : INTEGER := 100000; // initialize min_sum as big value
+BEGIN
+    // Read values in arr
+
+    FOR i FROM 0 TO arr.length - 2 DO
+        FOR j FROM i+1 TO arr.length -1   DO
+            sum := arr[i]+arr[j];
+            // use abs to have the absolute value
+            IF (abs(sum) < abs(min_sum)) THEN
+                min_sum := sum;
+            END_IF
+        END_FOR
+    END_FOR
+
+    Write(sum);
+END

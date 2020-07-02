@@ -1,0 +1,43 @@
+ALGORITHM merge_sorted_LL
+VAR
+    List:   STRUCT
+                data : INTEGER;
+                next : ^List;
+            END_STRUCT
+    first, first1, first2 : ^List := NULL;
+    stk: STACK;
+    p : ^List := NULL;
+BEGIN
+    // Read the two linked list
+
+    WHILE (first1<> NULL AND first2<> NULL) DO
+        IF (first1^.data < first2^.data) THEN
+            stk.push(first1^.data);
+            first1 := first1^.next;
+        ELSE
+            stk.push(first2^.data);
+            first2 := first2^.next;
+        END_IF
+    END_WHILE
+
+    WHILE (first1<> NULL) DO
+        stk.push(first1^.data);
+        first1 := first1^.next;
+    END_WHILE
+
+    WHILE (first2<> NULL) DO
+        stk.push(first2^.data);
+        first2 := first2^.next;
+    END_WHILE
+
+    WHILE (NOT stk.isEmpty()) DO
+        // allocate memory and create a node
+        p := create(List);
+        // insert data in the node
+        p^.data := stk.pop();
+        // link first to p inserting in the head of the list
+        p^.next := first;
+        first := p;
+    END_WHILE
+    
+END

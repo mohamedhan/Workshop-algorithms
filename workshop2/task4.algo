@@ -1,0 +1,95 @@
+ALGORITHM postfixe_expression
+VAR
+    c,x : CHAR;
+    stack : STACK;
+    exp, result : STRING[50] := "";
+    i, prec, prec_stack : INTEGER;
+BEGIN
+    Read(exp);
+
+    FOR i FROM 0 TO exp.length -1 DO
+        c := exp[i];
+
+        //check if character is operator wth precedence
+        SWITCH (c) DO
+            case '+' : 
+            case '-' : prec := 1; BREAK;
+            case '*' : 
+            case '/' : prec := 2; BREAK;
+            case '^' : prec := 3; BREAK;
+            default : prec := -1;
+        END_SWITCH
+
+        IF (prec > 0) THEN
+            WHILE (stack.isEmpty() = FALSE) DO
+                SWITCH (stack.peek()) DO
+                    case '+' : 
+                    case '-' : prec_stack := 1; BREAK;
+                    case '*' : 
+                    case '/' : prec_stack := 2; BREAK;
+                    case '^' : prec_stack := 3; BREAK;
+                    default : prec_stack := -1;
+                END_SWITCH
+                IF (prec_stack >= prec) THEN
+                    result.Concat(stack.pop());
+                ELSE
+                    BREAK;
+                END_IF
+            END_WHILE
+            stack.push(c);
+        ELSE_IF (c = ')') THEN
+            x := stack.pop();
+            WHILE (x <> '(') DO
+                result.Concat(x);
+                x := stack.pop();
+            END_WHILE
+        ELSE_IF (c = '(') THEN
+            stack.push(c);
+        ELSE
+            result.Concat(c);
+        END_IF
+    END_FOR
+    WHILE (NOT stack.isEmpty()) DO
+        result.Concat(stack.pop());
+    END_WHILE
+
+    Write(result);
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+Use Stacks
+
+Operator stack: This stack will be used to keep operations (+, -, *, /, ^)
+Order of precedence of operations–
+
+^ (Exponential)
+/ *
++ –
+Note: brackets ( ) are used to override these rules.
+
+Algorithm:
+
+Initialize result as a blank string, Iterate through given expression, one character at a time
+
+If the character is an operand, add it to the result.
+If the character is an operator.
+If the operator stack is empty then push it to the operator stack.
+Else If the operator stack is not empty,
+If the operator’s precedence is greater than or equal to the precedence of the stack top of the operator stack, then push the character to the operator stack.
+If the operator’s precedence is less than the precedence of the stack top of operator stack then “pop out an operator from the stack and add it to the result until the stack is empty or operator’s precedence is greater than or equal to the precedence of the stack top of operator stack“. then push the operator to stack.
+If the character is “(“, then push it onto the operator stack.
+If the character is “)”, then “pop out an operator from the stack and add it to the result until the corresponding “(“ is encountered in operator stack. Now just pop out the “(“.
+Once the expression iteration is completed and the operator stack is not empty, “pop out an operator from the stack and add it to the result” until the operator stack is empty.  The result will be our answer, postfix expression.
+*/
