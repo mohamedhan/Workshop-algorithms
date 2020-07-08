@@ -33,6 +33,7 @@ VAR
     List :	STRUCT
                         data : INTEGER; //any data structure
                         next : ^List; //^  pointer
+                        
                     END_STRUCT
 
     first: ^List :=NULL //pointer
@@ -128,7 +129,7 @@ BEGIN
                             state_stack := stk.peek(); // peek do not affect the stack.
                             Write(state_stack);
                             BREAK;
-            case ']': IF (stp.peek()='[') THEN
+            case ']': IF (stk.peek()='[') THEN
                                 state_stack := stk.pop(); // peek do not affect the stack.
                                 Write(state_stack);
                             ELSE
@@ -186,6 +187,7 @@ BEGIN
         read(c)
         // allocate memory and create a node 
         p:=create(List)
+        
         // insert data in the node       
         p^.data:=c;
        // link first to p inserting in the head of the list

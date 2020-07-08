@@ -1,0 +1,84 @@
+// o(n^2)>o(n log n)>o(n)
+
+///
+FUNCTION function_name(tab: ARRAY_OF INTEGER,val:INTEGER) : BOOLEAN //O(n)
+VAR
+    i : INTEGER;
+BEGIN
+    FOR i FROM 0 TO n-1   DO
+       IF (val=tab[i]) THEN
+           RETURN true
+       END_IF
+    END_FOR
+    RETURN false
+
+END
+////
+
+
+FUNCTION function_name(tab: ARRAY_OF INTEGER,val:INTEGER) : BOOLEAN //O(n/2)
+VAR
+    i : INTEGER;
+BEGIN
+    FOR i FROM 0 TO n-1 STEP 2   DO
+       IF (val=tab[i]) THEN
+           RETURN true
+       END_IF
+    END_FOR
+    RETURN false
+
+END
+/////////////
+
+FUNCTION function_name(tab: ARRAY_OF INTEGER,val:INTEGER) : BOOLEAN //O(n+n/2)=>O(2n)=>O(n)
+VAR
+    i : INTEGER;
+BEGIN
+    FOR i FROM 0 TO n-1   DO
+       IF (val=tab[i]) THEN
+           RETURN true
+       END_IF
+    END_FOR
+//+
+     FOR i FROM 0 TO n-1   DO
+       IF (val=tab[i]) THEN
+           RETURN true
+       END_IF
+    END_FOR
+    
+    RETURN false
+
+END
+
+////
+
+FUNCTION function_name(tab: ARRAY_OF INTEGER) : BOOLEAN // O(n*m)
+VAR
+    i,j :INTEGER;
+BEGIN
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        FOR j FROM 0 TO m-1 STEP 1  DO
+            IF (i<>j AND tab[i]=tab[j]) THEN
+                RETURN true
+            END_IF
+        END_FOR
+    END_FOR
+    RETURN false
+END
+
+/////
+
+FUNCTION function_name(tab: ARRAY_OF INTEGER) : BOOLEAN
+VAR
+    i,j :INTEGER;
+BEGIN
+    FOR i FROM 0 TO n-1 DO // O(n)
+        FOR j FROM i TO n-1   DO //o(n-i)=>   o(n)o(n-1)o(n-2) .... o(1) =>O(log n) 
+            IF (i<>j AND tab[i]=tab[j]) THEN 
+                RETURN true
+            END_IF
+        END_FOR
+    END_FOR
+    RETURN false
+END
+

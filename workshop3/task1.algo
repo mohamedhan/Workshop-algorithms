@@ -1,0 +1,92 @@
+// Write an algorithm which reads as input a sentence, 
+// character by character,
+//  ending with ‘#’ and displays the number of letters,
+//  the number of digits, the number of separators and the number 
+//of other special 
+//  characters in this sentence. In this algorithm,
+// we will call the functions described 
+//  below (which must be written):
+
+
+//   is_separator (d: character): returns true if d is a separator 
+//and false otherwise.
+//   is_letter (d: character): returns true if d is a letter and false
+// otherwise.
+//   is_digit (d: character): returns true if d is a digit and false otherwise
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FUNCTION is_separator(d: CHAR) : BOOLEAN
+VAR
+BEGIN
+    IF (d = ' ' OR d = ',' OR d = ';' OR d = '.' ) THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END_IF
+END
+
+
+FUNCTION is_letter(d: CHAR) : BOOLEAN
+VAR
+BEGIN
+    IF (d >= 'a' AND d <= 'z' OR d >= 'A' AND d <= 'Z' ) THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END_IF
+END
+
+
+FUNCTION is_digit(d: CHAR) : BOOLEAN
+VAR
+BEGIN
+    IF (d >= '0' AND d <= '9') THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END_IF
+END
+
+ALGORITHM statistic
+VAR
+    nb_lettre, nb_digit, nb_sep, nb_other : INTEGER;
+    c : CHAR := ' ';
+BEGIN
+    nb_digit :=0;
+    nb_lettre :=0;
+    nb_sep :=0;
+    nb_other :=0;
+    WHILE (c <> '#') DO
+        IF (is_digit(c)) THEN
+            nb_digit := nb_digit +1;
+        ELSE_IF (is_letter(c)) THEN
+            nb_lettre := nb_lettre +1;
+        ELSE_IF (is_separator(c)) THEN
+            nb_sep := nb_sep +1;
+        ELSE
+            nb_other := nb_other +1;
+        END_IF
+    END_WHILE
+
+    Write(nb_digit);
+    Write(nb_lettre);
+    Write(nb_sep);
+    Write(nb_other);
+END

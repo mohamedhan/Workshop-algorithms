@@ -1,0 +1,26 @@
+PROCEDURE swap(VAR xp:INTEGER,VAR yp:INTEGER)
+VAR
+    temp : INTEGER;
+BEGIN
+    tmp:=xp;
+    xp:=yp;
+    yp:=tmp
+END
+
+PROCEDURE selectionSort(VAR arr: ARRAY_OF INTEGER)
+VAR
+    i,j,min_idx,n: INTEGER;
+BEGIN
+    n:=arr.length
+    
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        min_idx:=i
+        FOR j FROM i+1 TO n-1 STEP step  DO
+            IF (arr[j]<arr[min_idx]) THEN 
+                min_idx:=j
+            END_IF
+        END_FOR
+        //swap the found minimum element with the first element
+        swap(arr[min_idx],arr[i])
+    END_FOR
+END

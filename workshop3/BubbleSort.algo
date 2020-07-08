@@ -1,0 +1,25 @@
+PROCEDURE swap(VAR xp:INTEGER,VAR yp:INTEGER)
+VAR
+    temp : INTEGER;
+BEGIN
+    tmp:=xp;
+    xp:=yp;
+    yp:=tmp
+END
+
+//bubble sort
+
+PROCEDURE bubbleSort(VAR tab: ARRAY_OF INTEGER)
+VAR
+    i,j,n:INTEGER
+BEGIN
+    n:=tab.length;
+    FOR i FROM 0 TO n-1 STEP 1  DO
+        //last i elements are already in place
+        FOR j FROM 0 TO n-i-1 STEP step  DO
+            IF (tab[j]> tab[j+1]) THEN
+                swap(tab[i],tab[j+1])
+            END_IF
+        END_FOR
+    END_FOR
+END
