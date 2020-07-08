@@ -1,0 +1,55 @@
+FUNCTION anagram(wrd1, wrd2 : STRING) : BOOLEAN
+VAR
+    first, second : HASH_TABLE<CHAR,INTEGER>; // we will calculat the frequency of each character
+    keys_first, keys_second : ARRAY_OF CHAR[52];
+    i, count : INTEGER;
+BEGIN
+    // Calculating frequency of characters of the first string
+    FOR i FROM 0 TO wrd1.length-1 DO
+        IF (first.lookup(wrd1[i]) = TRUE) THEN
+            count := first.get(wrd1[i]);
+            first.insert(wrd1[i],count+1);
+        ELSE
+            first.insert(wrd1[i],1);
+        END_IF
+    END_FOR
+    // Calculating frequency of characters of the second string
+    FOR i FROM 0 TO wrd2.length-1 DO
+        IF (second.lookup(wrd1[i]) = TRUE) THEN
+            count := second.get(wrd2[i]);
+            second.insert(wrd2[i],count+1);
+        ELSE
+            second.insert(wrd2[i],1);
+        END_IF
+    END_FOR
+    RETURN value ;
+    keys_first := first.getKeys();
+    keys_second := second.getKeys();
+    // we will compare the frequency of charters
+    IF (keys_first.length = keys_second.length) THEN
+        // test the two hashtabels with one set of keys
+        i:=0;
+        WHILE (i < keys_first.length) DO
+            IF (first.get(keys_first[i]) <> second.get(keys_first[i]) ) THEN
+                RETURN FALSE;
+            END_IF
+            i := i+1;
+        END_WHILE
+    ELSE
+        // is not the same sate of charaters
+        RETURN FALSE;
+    END_IF
+    RETURN TRUE;
+
+END
+
+PROCEDURE mirror(str1 : STRING, VAR str2 STRING)
+VAR
+    i,j : INTEGER;
+BEGIN
+    j:=0;
+    FOR i FROM str1.length-1 TO 0 STEP -1  DO
+        str2[j]:= str1[i];
+        j:=j+1;
+    END_FOR
+END

@@ -1,0 +1,101 @@
+FUNCTION free_rooms(rooms : ARRAY_OF Hotel) : INTEGER
+VAR
+    nb_free : INTEGER := 0;
+    i: INTEGER;
+BEGIN
+    FOR i FROM 0 TO rooms.length-1 STEP 1 DO
+        IF (rooms[i].state = TRUE) THEN
+            nb_free := nb_free +1;
+        END_IF
+    END_FOR
+    RETURN nb_free ;
+END
+
+FUNCTION nb_nationality(rooms : ARRAY_OF Hotel, nationality: INTEGER) : INTEGER
+VAR
+    nb :INTEGER :=0;
+    i,j: INTEGER;
+BEGIN
+    FOR i FROM 0 TO rooms.length-1 STEP 1 DO
+        FOR j FROM 0 TO rooms[i].clients STEP step  DO
+            IF (rooms[i].clients[j].natio = nationality) THEN
+                nb := nb + 1;
+            END_IF
+        END_FOR
+    END_FOR
+    RETURN nb_free ;
+END
+PROCEDURE write_array(T: ARRAY_OF INTEGER)
+VAR
+    i : INTEGER;
+BEGIN
+    FOR i FROM 0 TO T.length-1  DO
+        Write(T[i]);
+    END_FOR
+END
+PROCEDURE children_in_hotel(rooms : ARRAY_OF Hotel)
+VAR
+    nb_by_natio: ARRAY_OF INTEGER[30];
+    i,j: INTEGER;
+BEGIN
+    FOR i FROM 0 TO 29 STEP 1  DO
+        nb_by_natio[i] := 0;
+    END_FOR
+    FOR i FROM 0 TO rooms.length-1 STEP 1 DO
+        FOR j FROM 0 TO rooms[i].clients STEP step  DO
+            IF (rooms[i].clients[j].age <= 12) THEN
+                nb_by_natio[rooms[i].clients[j].natio-1] := nb_by_natio[rooms[i].clients[j].natio-1] + 1;
+            END_IF
+        END_FOR
+    END_FOR
+    write_array(nb_by_natio);
+END
+
+PROCEDURE max_array_index(T : ARRAY_OF INTEGER, VAR max_index : INTEGER)
+VAR
+    i : INTEGER;
+    max : INTEGER := -1;
+BEGIN
+    FOR i FROM 0 TO T.length-1 STEP 1  DO
+        IF(T[i]> max) THEN
+            max := T[i];
+            max_index := i 
+        END_IF
+    END_FOR
+END
+
+FUNCTION top_nationality(rooms : ARRAY_OF Hotel) : INTEGER
+VAR
+    nb_by_natio: ARRAY_OF INTEGER[30];
+    i,j, max_index: INTEGER;
+BEGIN
+    FOR i FROM 0 TO 29 STEP 1  DO
+        nb_by_natio[i] := 0;
+    END_FOR
+    FOR i FROM 0 TO rooms.length-1 STEP 1 DO
+        FOR j FROM 0 TO rooms[i].clients STEP step  DO
+                nb_by_natio[rooms[i].clients[j].natio-1] := nb_by_natio[rooms[i].clients[j].natio-1] + 1;
+        END_FOR
+    END_FOR
+    max_array_index(nb_by_natio,max_index);
+    RETURN max_index+1 ;
+END
+
+ALGORITHM hotel_management
+VAR
+    Client :	STRUCT
+                    id_num : INTEGER;
+                    name : STRING[50];
+                    natio : INTEGER;
+                    age : INTEGER;
+                END_STRUCT
+    Hotel :	STRUCT
+                unique_num : INTEGER;
+                type : INTEGER;
+                state : BOOLEAN;
+                clients : ARRAY_OF Client[4];
+            END_STRUCT
+    hotel_rooms : ARRAY_OF Hotel[50];
+BEGIN
+    // call functions here
+END
