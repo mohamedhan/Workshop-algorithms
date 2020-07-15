@@ -1,0 +1,40 @@
+ALGORITHM better_approach
+VAR
+    set1,set2 : ARRAY_OF INTEGER[20];
+    set_keys : ARRAY_OF INTEGER[40];
+    dict := HASH_TABLE<INTEGER,INTEGER>;
+    i, count : INTEGER;
+    sum : INTEGER := 0;
+BEGIN
+    // reading elements in the two sets
+
+    // Insert all the elements from
+    // both the sets with the element as key and its count (in both arrays).
+
+    FOR i FROM 0 TO set1.length -1 STEP 1  DO
+        IF (dict.lookup(set1[i]) = TRUE) THEN
+            count := dict.get(set1[i]);
+            dict.insert(set1[i],count+1);
+        ELSE
+            dict.insert(set1[i],1);
+        END_IF
+    END_FOR
+
+    FOR i FROM 0 TO set2.length -1 STEP 1  DO
+        IF (dict.lookup(set2[i]) = TRUE) THEN
+            count := dict.get(set2[i]);
+            dict.insert(set2[i],count+1);
+        ELSE
+            dict.insert(set2[i],1);
+        END_IF
+    END_FOR
+
+    //get sum of distinct elements
+    set_keys := dict.getKeys();
+    FOR i FROM 0 TO set_keys.length -1 STEP 1  DO
+        IF (dict.get(set_keys[i]) = 1) THEN
+            sum := sum +set_keys[i];
+        END_IF
+    END_FOR
+
+END
