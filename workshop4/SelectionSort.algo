@@ -1,6 +1,6 @@
 PROCEDURE swap(VAR xp:INTEGER,VAR yp:INTEGER)
 VAR
-    temp : INTEGER;
+    tmp : INTEGER;
 BEGIN
     tmp:=xp;
     xp:=yp;

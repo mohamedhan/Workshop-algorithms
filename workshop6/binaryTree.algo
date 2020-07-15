@@ -1,0 +1,90 @@
+// Name: Tree basic operations 
+// Description: 
+// We want to develop the basic operation that we need with any tree, we will work here with binary trees.
+//1- Write a function that gives the number of nodes in the tree.
+//2- Write a function that gives the height of a tree.
+//3- Write a function that gives the number of leaves in the tree.
+//4- Write a function that gives the maximum value in the tree.
+//5- Write a function to test if the tree is a full binary tree.
+// Instructions:
+// Present the structure of a binary tree.
+// Think recursively, do not forget about base case.
+// Try to divide the problems to smaller problems of the same type
+// With tree always think that you have only three node (root, left child, right child) and repeat the work recursively. 
+
+
+
+
+BT :STRUCT
+        VAL : INTEGER; 
+        LC : ^BT; // a pointer to left child
+        RC : ^BT; // a pointer to right child
+    END_STRUCT
+// 1
+FUNCTION nb_nodes(root : ^BT) : INTEGER
+BEGIN
+    IF (root = NULL) THEN
+        RETURN 0;
+    ELSE
+        RETURN 1 + nb_nodes(root^.LC) + nb_nodes(root^.RC);
+    END_IF
+END
+//2 
+FUNCTION max(a,b : INTEGER) : INTEGER
+BEGIN
+    IF (a < b) THEN
+        RETURN b;
+    ELSE
+        RETURN a;
+    END_IF
+END
+
+FUNCTION height(root : ^BT) : INTEGER
+BEGIN
+    IF (root = NULL) THEN
+        RETURN 0;
+    ELSE
+        RETURN 1 + max(height(root^.LC),height(root^.RC));
+    END_IF
+END
+//3 
+FUNCTION nb_leaves(root : ^BT) : INTEGER
+BEGIN
+    IF (root = NULL) THEN
+        RETURN 0;
+    ELSE_IF(root^.LC = NULL AND root^.RC = NULL)
+        RETURN 1;
+    ELSE
+        RETURN  nb_leaves(root^.LC) + nb_leaves(root^.RC);
+    END_IF
+END
+
+//4
+FUNCTION maximum(root : ^BT) : INTEGER
+BEGIN
+    IF (root <> NULL) THEN
+        IF (root^.LC = NULL AND root^.RC = NULL) THEN
+            RETURN root^.VAL;
+        ELSE_IF (root^.LC = NULL) THEN
+            RETURN max(root^.VAL,maximum(root^.RC));
+        ELSE_IF (root^.RC = NULL) THEN
+            RETURN max(root^.VAL,maximum(root^.LC));
+        ELSE
+            RETURN max(maximum(root^.LC),maximum(root^.RC));
+        END_IF
+    END_IF
+END
+
+// 5
+FUNCTION full_BT(root : ^BT) : BOOLEAN
+BEGIN
+    IF (root <> NULL) THEN
+        IF (root^.LC = NULL AND root^.RC = NULL) THEN
+            RETURN TRUE;
+        ELSE_IF (root^.LC <> NULL AND root^.RC <> NULL) THEN
+            RETURN full_BT(root^.LC) AND full_BT(root^.RC);
+        ELSE
+            RETURN FALSE;
+        END_IF
+    END_IF
+END
